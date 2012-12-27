@@ -90,6 +90,13 @@ func (s *Server) HasMethod(method string) bool {
 	return false
 }
 
+// HasMethod returns true if the given method is registered.
+//
+// The method uses a dotted notation as in "Service.Method".
+func (s *Server) ListMethods(service string) ([]string, error) {
+	return s.services.list(service)
+}
+
 // ServeHTTP
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {

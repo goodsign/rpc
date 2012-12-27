@@ -151,6 +151,23 @@ func (m *serviceMap) get(method string) (*service, *serviceMethod, error) {
 	return service, serviceMethod, nil
 }
 
+// list returns list of registered methods for a specified service type name.
+func (m *serviceMap) list(serviceName string) (res []string, err error) {
+	m.mutex.Lock()
+	service, ok := m.services[serviceName]
+	m.mutex.Unlock()
+	if !ok {
+		err = fmt.Errorf("rpc: can't find service %q", serviceName)
+		return
+	}
+	
+	for k, _ := range service.methods {
+		res = append(res, k)
+	}
+
+	return
+}
+
 // isExported returns true of a string is an exported (upper case) name.
 func isExported(name string) bool {
 	rune, _ := utf8.DecodeRuneInString(name)

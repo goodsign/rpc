@@ -8,7 +8,7 @@ package json
 import (
 	"encoding/json"
 	"errors"
-	"github.com/gorilla/rpc"
+	"github.com/goodsign/rpc"
 	"net/http"
 )
 
